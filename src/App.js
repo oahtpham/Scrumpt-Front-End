@@ -3,6 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import SprintContainer from './Containers/SprintContainer'
 import StageContainer from './Containers/StageContainer'
+import Nav from './Components/Nav'
 
 const STORYURL = ("http://localhost:3000/stories")
 const USERURL = ("http://localhost:3000/users")
@@ -37,8 +38,9 @@ class App extends Component {
   render() {
     return (
       <div>
+        <Nav />
         <StageContainer />
-        <SprintContainer />
+        <SprintContainer />   
       </div>
     );
   }
