@@ -1,28 +1,22 @@
-import React, { Component } from 'react';
-import logo from './logo.svg';
+import React from 'react';
+import { Grid, Header } from 'semantic-ui-react'
 import './App.css';
 import SprintContainer from './Containers/SprintContainer'
 import StageContainer from './Containers/StageContainer'
 import Nav from './Components/Nav'
 
-const STORYURL = ("http://localhost:3000/stories")
 const USERURL = ("http://localhost:3000/users")
 const COMMENTURL = ("http://localhost:3000/comments")
 
-class App extends Component {
+class App extends React.Component {
+
 
   state = {
     users: [],
-    stories: [],
     comments: []
   }
 
   componentDidMount() {
-    fetch(STORYURL)
-    .then(r => r.json())
-    .then(storyJson => this.setState({
-      stories: storyJson
-    }))
     fetch(USERURL)
     .then(r => r.json())
     .then(userJson => this.setState({
@@ -39,8 +33,15 @@ class App extends Component {
     return (
       <div>
         <Nav />
-        <StageContainer />
-        <SprintContainer />   
+        <Grid id="dashboard" stackable columns={2}>
+          <Grid.Column>
+            <Header> Sprints </Header>
+            <SprintContainer />
+          </Grid.Column>
+          <Grid.Column>
+            <StageContainer />
+          </Grid.Column>
+        </Grid>
       </div>
     );
   }

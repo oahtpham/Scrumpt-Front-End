@@ -1,9 +1,19 @@
 import React from 'react'
+import Story from './Story'
+import UUID from 'uuid'
 
-const Stage = ({stage}) => {
+const Stage = (props) => {
+
+  const storyMapper = () => {
+    return props.stories.map(story => {
+      return <Story key={UUID()} story={story}/>
+    })
+  }
+
   return (
     <div>
-    <p>{stage.stage_name}</p>
+    <h1>{props.stage.stage_name}</h1>
+    <p>{storyMapper()}</p>
     </div>
   )
 }

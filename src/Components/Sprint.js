@@ -1,9 +1,9 @@
 import React from 'react'
 
-const Sprint = ({sprint}) => {
+const Sprint = (props) => {
   return (
     <div>
-    <p>{sprint.sprint_name}</p>
+      <p onClick={() => props.sprint.clicked(props.sprint.id)}>{props.sprint.sprint_name}</p>
     </div>
   )
 }

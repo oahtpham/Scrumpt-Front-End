@@ -16,17 +16,27 @@ export default class SprintContainer extends Component {
     }))
   }
 
-  sprintMapper = () => {
-    return this.state.sprints.map(sprint => {
-      return <Sprint key={sprint.id} sprint={sprint} />
+  handleClick = (sprintId) => {
+    const sprints = this.state.sprints.map(sprint => {
+      return sprintId === sprint.id ? { ...sprint, display: !sprint.display } : sprint
+    })
+    this.setState({
+      sprints
     })
   }
 
+  sprintMapper = () => {
+    return this.state.sprints.map(sprint => {
+      return <Sprint key={sprint.id} sprint={sprint} clicked={this.handleClick}/>
+    })
+  }
+
+
   render() {
     return (
-      <div>
-      {this.sprintMapper()}
-      </div>
+        <div className = "four wide column">
+        {this.sprintMapper()}
+        </div>
     )
   }
 
