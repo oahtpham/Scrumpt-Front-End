@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
 import logo from './logo.svg';
 import './App.css';
+import Nav from './Components/Nav'
+import Sprint from './Components/Sprint'
 
 const STORYURL = ("http://localhost:3000/stories")
 const USERURL = ("http://localhost:3000/users")
@@ -49,7 +51,10 @@ class App extends Component {
   render() {
     console.log(this.state.users)
     return (
-      null
+      <div>
+        <Nav />
+        <Sprint sprints={this.state.sprints}/>
+      </div>
     );
   }
 }
