@@ -7,12 +7,12 @@ const Stage = (props) => {
 
   const storyMapper = () => {
     if (props.stories !== null) {
-      console.log(props.stories)
       const filteredStories = props.stories.filter(story => story.stage_id === props.stage.id)
       return filteredStories.map(story => {
+        const classColor=`ui ${story.sprint.color} card`
         return (
           <Card.Group id="stories" key={story.id}>
-            <Card>
+            <Card className ={classColor}>
               <Card.Content>
                 <Story  story={story}/>
               </Card.Content>

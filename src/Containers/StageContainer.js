@@ -32,14 +32,18 @@ export default class StageContainer extends Component {
     return this.state.stages.map(stage => {
       return (
           <Grid.Column key={stage.id} width={3}>
-            <Stage key={stage.id} stage={stage} stories={this.filteredSprints().length === 0 ? null : this.filteredSprints().map(sprint =>  sprint.stories).flat()}/>
+            <Stage key={stage.id} stage={stage} stories={this.filteredSprints().length === 0 ? null : this.filteredSprints().map(sprint =>
+              this.state.stories.filter(story => story.sprint.id === sprint.id)
+            ).flat()}/>
           </Grid.Column>
       )
     })
   }
 
 
+
   render() {
+    console.log(this.stageMapper())
     return (
       <div>
         <div >
