@@ -24,16 +24,21 @@ export default class StageContainer extends Component {
     }))
   }
 
+  filteredSprints = () => {
+    return this.props.sprints.filter(sprint => sprint.display === true)
+  }
+
   stageMapper = () => {
     return this.state.stages.map(stage => {
       return (
-        <Stage key={stage.id} stage={stage} stories={this.state.stories.filter(story => story.stage_id === stage.id)}/>
+        <Stage key={stage.id} stage={stage} stories={this.filteredSprints().length === 0 ? null : this.filteredSprints().map(sprint =>  sprint.stories)[0]}/>
       )
     })
   }
 
 
   render() {
+    console.log(this.filteredSprints(), this.state.stories)
     return (
       <div>
         <div >

@@ -7,14 +7,17 @@ import Nav from './Components/Nav'
 
 const USERURL = ("http://localhost:3000/users")
 const COMMENTURL = ("http://localhost:3000/comments")
+const SPRINTURL = ("http://localhost:3000/sprints")
 
 class App extends React.Component {
 
 
   state = {
     users: [],
+    sprints: [],
     comments: []
   }
+
 
   componentDidMount() {
     fetch(USERURL)
@@ -27,6 +30,20 @@ class App extends React.Component {
     .then(commentJson => this.setState({
       comments: commentJson
     }))
+    fetch(SPRINTURL)
+    .then(r => r.json())
+    .then(sprintJson => this.setState({
+      sprints: sprintJson
+    }))
+  }
+
+  handleSprintClick = (sprintId) => {
+    const sprints = this.state.sprints.map(sprint => {
+      return sprintId === sprint.id ? { ...sprint, display: !sprint.display } : sprint
+    })
+    this.setState({
+      sprints
+    })
   }
 
   render() {
@@ -36,10 +53,10 @@ class App extends React.Component {
         <Grid id="dashboard" stackable columns={2}>
           <Grid.Column>
             <Header> Sprints </Header>
-            <SprintContainer />
+            <SprintContainer clicked={this.handleSprintClick} sprints={this.state.sprints}/>
           </Grid.Column>
           <Grid.Column>
-            <StageContainer />
+            <StageContainer sprints={this.state.sprints}/>
           </Grid.Column>
         </Grid>
       </div>
