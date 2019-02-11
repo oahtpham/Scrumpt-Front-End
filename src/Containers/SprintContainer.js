@@ -4,6 +4,8 @@ import { Card } from 'semantic-ui-react'
 
 export default class SprintContainer extends Component {
 
+
+
   sprintMapper = () => {
     return this.props.sprints.map(sprint => {
       const classColor=`ui ${sprint.color} card`
@@ -11,7 +13,7 @@ export default class SprintContainer extends Component {
         <Card.Group id="stories" key={sprint.id}>
           <Card className={classColor}>
             <Card.Content>
-              <Sprint sprint={sprint} clicked={this.props.clicked}/>
+              <Sprint sprint={sprint} clicked={this.props.clicked} clickDetails={this.props.clickDetails} showDetails={this.props.showDetails}/>
             </Card.Content>
           </Card>
         </Card.Group>

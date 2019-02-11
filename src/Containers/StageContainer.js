@@ -40,8 +40,6 @@ export default class StageContainer extends Component {
     })
   }
 
-
-
   render() {
     console.log(this.stageMapper())
     return (
