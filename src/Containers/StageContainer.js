@@ -1,6 +1,6 @@
 import React, {Component} from 'react'
 import Stage from '../Components/Stage'
-import { Grid, Header } from 'semantic-ui-react'
+import { Grid } from 'semantic-ui-react'
 
 const STAGEURL = ("http://localhost:3000/stages")
 const STORYURL = ("http://localhost:3000/stories")
@@ -31,18 +31,23 @@ export default class StageContainer extends Component {
   stageMapper = () => {
     return this.state.stages.map(stage => {
       return (
-        <Stage key={stage.id} stage={stage} stories={this.filteredSprints().length === 0 ? null : this.filteredSprints().map(sprint =>  sprint.stories)[0]}/>
+          <Grid.Column key={stage.id} width={3}>
+            <Stage key={stage.id} stage={stage} stories={this.filteredSprints().length === 0 ? null : this.filteredSprints().map(sprint =>
+              this.state.stories.filter(story => story.sprint.id === sprint.id)
+            ).flat()}/>
+          </Grid.Column>
       )
     })
   }
 
-
   render() {
-    console.log(this.filteredSprints(), this.state.stories)
+    console.log(this.stageMapper())
     return (
       <div>
         <div >
-        {this.stageMapper()}
+          <Grid id='stages'>
+            {this.stageMapper()}
+          </Grid>
         </div>
       </div>
     )

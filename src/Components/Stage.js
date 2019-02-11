@@ -1,5 +1,7 @@
 import React from 'react'
 import Story from './Story'
+import { Button, Card, Image } from 'semantic-ui-react'
+
 
 const Stage = (props) => {
 
@@ -7,18 +9,25 @@ const Stage = (props) => {
     if (props.stories !== null) {
       const filteredStories = props.stories.filter(story => story.stage_id === props.stage.id)
       return filteredStories.map(story => {
-        return <Story key={story.id} story={story}/>
+        const classColor=`ui ${story.sprint.color} card`
+        return (
+          <Card.Group id="stories" key={story.id}>
+            <Card className ={classColor}>
+              <Card.Content>
+                <Story  story={story}/>
+              </Card.Content>
+            </Card>
+          </Card.Group>
+        )
       })
     }
   }
 
-  console.log(storyMapper())
-
   return (
-    <div>
-    <h1>{props.stage.stage_name}</h1>
-    <p>{storyMapper()}</p>
-    </div>
+        <div>
+          <h3>{props.stage.stage_name}</h3>
+            {storyMapper()}
+        </div>
   )
 }
 
