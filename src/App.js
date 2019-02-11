@@ -1,10 +1,13 @@
 import React from 'react';
 import { Grid, Modal } from 'semantic-ui-react'
+import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom"
 import './App.css';
 import SprintContainer from './Containers/SprintContainer'
 import StageContainer from './Containers/StageContainer'
 import FormContainer from './Containers/FormContainer'
 import Nav from './Components/Nav'
+import Login from './Login'
+
 
 
 const USERURL = ("http://localhost:3000/users")
@@ -15,12 +18,13 @@ class App extends React.Component {
 
 
   state = {
-    users: [],
+    user: "",
     sprints: [],
     comments: [],
     sprint_name: '',
     deadline: '',
     color: '',
+    logged_in: false
   }
 
 
