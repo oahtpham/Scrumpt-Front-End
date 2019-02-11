@@ -1,14 +1,18 @@
 import React from 'react'
 import Story from './Story'
-import UUID from 'uuid'
 
 const Stage = (props) => {
 
   const storyMapper = () => {
-    return props.stories.map(story => {
-      return <Story key={UUID()} story={story}/>
-    })
+    if (props.stories !== null) {
+      const filteredStories = props.stories.filter(story => story.stage_id === props.stage.id)
+      return filteredStories.map(story => {
+        return <Story key={story.id} story={story}/>
+      })
+    }
   }
+
+  console.log(storyMapper())
 
   return (
     <div>
