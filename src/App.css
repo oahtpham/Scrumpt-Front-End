@@ -30,3 +30,19 @@
     transform: rotate(360deg);
   }
 }
+
+#App {
+  background-color: #F0F0F0;
+}
+
+#dashboard {
+  text-align: center;
+  padding: 10px;
+  margin: 10px;
+  height: 100%;
+}
+
+#stages {
+  height: 100%;
+  margin: center;
+}

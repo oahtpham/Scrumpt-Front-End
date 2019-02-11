@@ -1,5 +1,5 @@
 import React from 'react';
-import { Grid, Header } from 'semantic-ui-react'
+import { Grid } from 'semantic-ui-react'
 import './App.css';
 import SprintContainer from './Containers/SprintContainer'
 import StageContainer from './Containers/StageContainer'
@@ -48,14 +48,14 @@ class App extends React.Component {
 
   render() {
     return (
-      <div>
+      <div id="App">
         <Nav />
-        <Grid id="dashboard" stackable columns={2}>
-          <Grid.Column>
-            <Header> Sprints </Header>
+        <Grid id="dashboard" divided>
+          <Grid.Column width={3}>
+            <h1> Sprints </h1>
             <SprintContainer clicked={this.handleSprintClick} sprints={this.state.sprints}/>
           </Grid.Column>
-          <Grid.Column>
+          <Grid.Column width={13}>
             <StageContainer sprints={this.state.sprints}/>
           </Grid.Column>
         </Grid>
