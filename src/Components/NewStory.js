@@ -22,7 +22,7 @@ const NewStory = (props) => {
       <select name="sprint" id="sprint-input">
       {props.sprints.map(sprint => {
         return (
-          <option name={sprint.sprint_name}>{sprint.sprint_name}</option>
+          <option key={sprint.id} name={sprint.sprint_name}>{sprint.sprint_name}</option>
         )
       })}
       <option>null</option>

@@ -14,7 +14,7 @@ const Stage = (props) => {
           <Card.Group id="stories" key={story.id}>
             <Card className ={classColor}>
               <Card.Content>
-                <Story  story={story}/>
+                <Story  story={story} deleteStory={props.deleteStory}/>
               </Card.Content>
             </Card>
           </Card.Group>
