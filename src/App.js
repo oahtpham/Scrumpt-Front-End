@@ -26,7 +26,7 @@ class App extends React.Component {
     showStory: false,
     showSprint: false,
     title: "",
-    description: "",
+    description: ""
   }
 
 
@@ -51,7 +51,6 @@ class App extends React.Component {
       sprints
     })
   }
-
 
   onChangeSprintInput = (event) => {
     event.preventDefault()
@@ -117,7 +116,7 @@ class App extends React.Component {
         })
       })
       .then(sprintCopy => {
-        this.setState({ sprints: sprintCopy}, () => console.log(this.state.sprints[0].stories))
+        this.setState({ sprints: sprintCopy})
       })
     }
 
@@ -153,6 +152,32 @@ class App extends React.Component {
   //   })
   // }
 
+  deleteSprint = (sprintId) => {
+    fetch(`${SPRINTURL}/${sprintId}`, { method: "DELETE" })
+    .then(resp => {
+      if (resp.ok) {
+        this.setState(prevState => {
+          return {sprints: [...prevState.sprints].filter(sprint => sprint.id !== sprintId)}
+        })
+      }
+    })
+  }
+
+  deleteStory = (story) => {
+    fetch(`${STORYURL}/${story.id}`, { method: "DELETE" })
+    .then(resp => {
+      if (resp.ok) {
+        let foundSprint = this.state.sprints.find(sprint => sprint.id === story.sprint_id)
+        let updatedSprintStories = foundSprint.stories.filter(s => s.id !== story.id)
+        this.setState({
+          sprints: this.state.sprints.map(sprint => {
+            return sprint.id === foundSprint.id ? {...sprint, stories: updatedSprintStories} : sprint
+          })
+        }, () => console.log(this.state.sprints[0].stories))
+      }
+    })
+  }
+
   render() {
     return (
       <div id="App">
@@ -165,7 +190,7 @@ class App extends React.Component {
         <Grid id="dashboard" divided>
           <Grid.Column width={3}>
             <h1> Sprints </h1>
-            <SprintContainer clicked={this.handleSprintClick} sprints={this.state.sprints} clickDetails={this.handleSprintDoubleClick}/>
+            <SprintContainer clicked={this.handleSprintClick} sprints={this.state.sprints} clickDetails={this.handleSprintDoubleClick} deleteSprint={this.deleteSprint}/>
             <Modal trigger={<h3 id="new-sprint" onClick={this.handleNewSprintClick}> + Add New Sprint </h3>}>
               <Modal.Content>
                 <FormContainer
@@ -178,7 +203,8 @@ class App extends React.Component {
           </Grid.Column>
           <Grid.Column width={13}>
             <StageContainer
-            sprints={this.state.sprints}/>
+            sprints={this.state.sprints}
+            deleteStory={this.deleteStory}/>
           </Grid.Column>
         </Grid>
       </div>

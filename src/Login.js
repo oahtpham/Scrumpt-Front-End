@@ -1,6 +1,7 @@
 import React, {Component} from 'react'
 import App from './App';
 import { Redirect } from "react-router-dom"
+import { Button, Form, Grid, Header, Image, Message, Segment } from 'semantic-ui-react'
 
 class Login extends Component {
   state = {
@@ -16,35 +17,48 @@ class Login extends Component {
      return <Redirect to='/app' />
    }
  }
+
   render() {
     return (
-      <div class="ui middle aligned center aligned grid">
-        <div class="column">
-          <h2 class="ui teal image header">
-            <div class="content">
-              Log in to your account
-            </div>
-          </h2>
-          <form class="ui large form">
-            <div class="ui stacked segment">
-              <div class="field">
-                <div class="ui left icon input">
-                  <i class="user icon"></i>
-                  <input name="username"/>
-                </div>
-              </div>
-              <div class="field">
-                <div class="ui left icon input">
-                  <i class="lock icon"></i>
-                  <input name="Password"/>
-                </div>
-              </div>
-              {this.renderRedirect()}
-              <button class="ui fluid large teal submit button" onClick={this.setRedirect}>Log in</button>
-            </div>
-            <div class="ui error message"></div>
-          </form>
-        </div>
+      <div className='login-form'>
+        {/*
+          Heads up! The styles below are necessary for the correct render of this example.
+          You can do same with CSS, the main idea is that all the elements up to the `Grid`
+          below must have a height of 100%.
+        */}
+        <style>{`
+          body > div,
+          body > div > div,
+          body > div > div > div.login-form {
+            height: 100%;
+          }
+        `}</style>
+        <Grid textAlign='center' style={{ height: '100%' }} verticalAlign='middle'>
+          <Grid.Column style={{ maxWidth: 450 }}>
+            <Header as='h2' color='teal' textAlign='center'>
+              <Image src='https://pluralsight2.imgix.net/paths/images/scrum-a5c44d8364.png' /> Log-in to your account
+            </Header>
+            <Form size='large'>
+              <Segment stacked>
+                <Form.Input fluid icon='user' iconPosition='left' placeholder='E-mail address' />
+                <Form.Input
+                  fluid
+                  icon='lock'
+                  iconPosition='left'
+                  placeholder='Password'
+                  type='password'
+                />
+                {this.renderRedirect()}
+                <Button onClick={this.setRedirect} color='teal' fluid size='large'>
+                  Login
+                </Button>
+              </Segment>
+            </Form>
+            <Message>
+              New to us? <a href='#'>Sign Up</a>
+            </Message>
+          </Grid.Column>
+        </Grid>
       </div>
     )
   }

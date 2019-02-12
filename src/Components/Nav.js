@@ -18,7 +18,7 @@ const Nav = (props) => {
         <Link to="/" className="item">Home</Link>
         <Link to="/dashboard" className="item" >Sprint Dashboard</Link>
         <Link to="/Backlog" className="item">Backlog</Link>
-        <Modal trigger={<a className="item" onClick={props.showStory}>Add new story</a>}>
+        <Modal trigger={<a className="item" onClick={props.showStory}>Add New Story</a>}>
           <Modal.Content>
           <FormContainer
           sprints={props.sprints}

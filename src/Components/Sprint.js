@@ -1,7 +1,5 @@
 import React from 'react'
-import { Modal } from 'semantic-ui-react'
-import Story from './Story'
-import {Card} from 'semantic-ui-react'
+import { Modal, Card, Button, Icon } from 'semantic-ui-react'
 import StageContainer from '../Containers/StageContainer'
 
 const _MS_PER_DAY = 1000 * 60 * 60 * 24
@@ -32,12 +30,6 @@ export default class Sprint extends React.Component {
   }
 
 
-  storyMapper = () => {
-    return this.state.showDetails ? <StageContainer sprints={this.props.sprint}/>
-    :
-    null
-  }
-
 
   render(){
     return (
@@ -47,9 +39,19 @@ export default class Sprint extends React.Component {
       <Modal open={this.state.showDetails}>
         <Modal.Header>{this.props.sprint.sprint_name}</Modal.Header>
           <Modal.Content>
-            {this.storyMapper()}
-            Days Left: {this.dateDiffInDays(todaysDate, this.dateFormat)}
+            <Modal.Description>
+            {this.props.sprint.description}
+            </Modal.Description>
+            Deadline: {this.dateDiffInDays(todaysDate, this.dateFormat)}
           </Modal.Content>
+          <Modal.Actions>
+            <Button color='green' inverted>
+              <Icon name='checkmark' /> Update
+            </Button>
+            <Button onClick={() => this.props.deleteSprint(this.props.sprint.id)} color='red' inverted>
+              <Icon name='remove' /> Delete
+            </Button>
+          </Modal.Actions>
       </Modal>
     </div>
     )

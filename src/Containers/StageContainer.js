@@ -19,7 +19,8 @@ export default class StageContainer extends Component {
   }
 
   storyMapper = () => {
-    if (this.props.sprints.length > 1) {const filteredSprints = this.props.sprints.filter(sprint => sprint.display === true)
+    if (this.props.sprints.length > 1) {
+      const filteredSprints = this.props.sprints.filter(sprint => sprint.display === true)
     return filteredSprints.map(sprint => {
       return sprint.stories.map(story => {
         return {...story, color: sprint.color}
@@ -40,7 +41,8 @@ export default class StageContainer extends Component {
     return this.state.stages.map(stage => {
       return (
           <Grid.Column key={stage.id} width={3}>
-            <Stage key={stage.id} stage={stage} stories={this.filteredSprints().length === 0 ? null : this.storyMapper()}/>
+            <Stage key={stage.id} stage={stage} stories={!this.filteredSprints() ? null : this.storyMapper()}
+            deleteStory={this.props.deleteStory}/>
           </Grid.Column>
       )
     })
