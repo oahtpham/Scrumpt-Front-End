@@ -7,8 +7,7 @@ const STORYURL = ("http://localhost:3000/stories")
 
 export default class StageContainer extends Component {
   state = {
-    stages: [],
-    stories: []
+    stages: []
   }
 
   componentDidMount() {
@@ -17,34 +16,40 @@ export default class StageContainer extends Component {
     .then(stageJson => this.setState({
       stages: stageJson
     }))
-    fetch(STORYURL)
-    .then(r => r.json())
-    .then(storyJson => this.setState({
-      stories: storyJson
-    }))
+  }
+
+  storyMapper = () => {
+    if (this.props.sprints.length > 1) {const filteredSprints = this.props.sprints.filter(sprint => sprint.display === true)
+    return filteredSprints.map(sprint => {
+      return sprint.stories.map(story => {
+        return {...story, color: sprint.color}
+      })
+    }).flat()}
+    else {
+      return this.props.sprints.stories.map(story => {
+        return {...story, color: this.props.sprints.color}
+      })
+    }
   }
 
   filteredSprints = () => {
-    return this.props.sprints.filter(sprint => sprint.display === true)
+    return this.props.sprints.length > 1 ? this.props.sprints.filter(sprint => sprint.display === true) : this.props.sprints.stories
   }
 
   stageMapper = () => {
     return this.state.stages.map(stage => {
       return (
           <Grid.Column key={stage.id} width={3}>
-            <Stage key={stage.id} stage={stage} stories={this.filteredSprints().length === 0 ? null : this.filteredSprints().map(sprint =>
-              this.state.stories.filter(story => story.sprint.id === sprint.id)
-            ).flat()}/>
+            <Stage key={stage.id} stage={stage} stories={this.filteredSprints().length === 0 ? null : this.storyMapper()}/>
           </Grid.Column>
       )
     })
   }
 
   render() {
-    console.log(this.stageMapper())
     return (
       <div>
-        <div >
+        <div>
           <Grid id='stages'>
             {this.stageMapper()}
           </Grid>

@@ -21,11 +21,24 @@ export default class SprintContainer extends Component {
     })
   }
 
+  formatSprint = () => {
+    const classColor=`ui ${this.props.sprints.color} card`
+    return (
+        <Card.Group id="stories" key={this.props.sprints.id}>
+          <Card className={classColor}>
+            <Card.Content>
+              <Sprint sprint={this.props.sprints} />
+            </Card.Content>
+          </Card>
+        </Card.Group>
+    )
+  }
+
 
   render() {
     return (
         <div >
-        {this.sprintMapper()}
+        {this.props.sprints.length > 1 ? this.sprintMapper() : this.formatSprint()}
         </div>
     )
   }

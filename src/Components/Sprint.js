@@ -1,5 +1,8 @@
 import React from 'react'
 import { Modal } from 'semantic-ui-react'
+import Story from './Story'
+import {Card} from 'semantic-ui-react'
+import StageContainer from '../Containers/StageContainer'
 
 const _MS_PER_DAY = 1000 * 60 * 60 * 24
 const todaysDate = new Date()
@@ -8,7 +11,8 @@ const todaysDate = new Date()
 export default class Sprint extends React.Component {
 
   state = {
-    showDetails: false
+    showDetails: false,
+    stories: this.props.sprint.stories
   }
 
   handleSprintDoubleClick = (sprintId) => {
@@ -27,6 +31,14 @@ export default class Sprint extends React.Component {
     return Math.floor((utc2 - utc1) / _MS_PER_DAY);
   }
 
+
+  storyMapper = () => {
+    return this.state.showDetails ? <StageContainer sprints={this.props.sprint}/>
+    :
+    null
+  }
+
+
   render(){
     return (
     <div onClick={() => this.props.clicked(this.props.sprint.id)} onDoubleClick={this.handleSprintDoubleClick}>
@@ -34,9 +46,10 @@ export default class Sprint extends React.Component {
       <p>Days Left: {this.dateDiffInDays(todaysDate, this.dateFormat)}</p>
       <Modal open={this.state.showDetails}>
         <Modal.Header>{this.props.sprint.sprint_name}</Modal.Header>
-        <Modal.Content>
-          Days Left: {this.dateDiffInDays(todaysDate, this.dateFormat)}
-        </Modal.Content>
+          <Modal.Content>
+            {this.storyMapper()}
+            Days Left: {this.dateDiffInDays(todaysDate, this.dateFormat)}
+          </Modal.Content>
       </Modal>
     </div>
     )

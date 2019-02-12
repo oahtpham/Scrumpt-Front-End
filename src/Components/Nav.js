@@ -2,6 +2,9 @@ import React from 'react'
 import { BrowserRouter as Router, Route, Link } from "react-router-dom"
 import Stage from './Stage'
 import App from '../App'
+import { Grid, Modal } from 'semantic-ui-react'
+import NewStory from './NewStory'
+import FormContainer from '../Containers/FormContainer'
 
 
 
@@ -12,9 +15,17 @@ const Nav = (props) => {
       <div>
       <Router>
         <div className="ui inverted secondary menu">
-        <Link to="/" className="active item">Home</Link>
+        <Link to="/" className="item">Home</Link>
         <Link to="/dashboard" className="item" >Sprint Dashboard</Link>
-        <Link to="/settings" className="item">Settings</Link>
+        <Link to="/Backlog" className="item">Backlog</Link>
+        <Modal trigger={<a className="item" onClick={props.showStory}>Add new story</a>}>
+          <Modal.Content>
+          <FormContainer
+          sprints={props.sprints}
+          onChangeStoryInput={props.onChangeStoryInput}
+          submit={props.submit}/>
+          </Modal.Content>
+        </Modal >
         </div>
       </Router>
         </div>

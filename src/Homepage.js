@@ -16,6 +16,8 @@ import {
   Visibility,
 } from 'semantic-ui-react'
 import './Homepage.css';
+import { Redirect, Link } from "react-router-dom"
+import Login from './Login'
 
 const appScreenshot = require('./images/appscreenshot.png')
 
@@ -72,7 +74,20 @@ HomepageHeading.propTypes = {
  * It can be more complicated, but you can create really flexible markup.
  */
 class DesktopContainer extends Component {
-  state = {}
+  state = {
+    redirect: false
+  }
+
+  setRedirect = () => {
+   this.setState({
+     redirect: true
+   })
+ }
+ renderRedirect = () => {
+   if (this.state.redirect) {
+     return <Redirect to='/login' />
+   }
+ }
 
   hideFixedMenu = () => this.setState({ fixed: false })
   showFixedMenu = () => this.setState({ fixed: true })
@@ -106,7 +121,8 @@ class DesktopContainer extends Component {
                   <img src='https://pluralsight2.imgix.net/paths/images/scrum-a5c44d8364.png'/>
                 </Menu.Item>
                 <Menu.Item position='right'>
-                  <Button as='a' inverted={!fixed}>
+                  {this.renderRedirect()}
+                  <Button as='a' inverted={!fixed} onClick={this.setRedirect}>
                     Log in
                   </Button>
                   <Button as='a' inverted={!fixed} primary={fixed} style={{ marginLeft: '0.5em' }}>
