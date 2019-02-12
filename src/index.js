@@ -9,7 +9,8 @@ import {BrowserRouter as Router, Route} from 'react-router-dom'
 
 ReactDOM.render(<Router><>
     <Route path="/app" component={App} />
-    <Route exact path="/" component={Login} />
+    <Route exact path="/" component={Homepage} />
+    <Route path="/login" component={Login} />
   </></Router>, document.getElementById('root'));
 
 // If you want your app to work offline and load faster, you can change

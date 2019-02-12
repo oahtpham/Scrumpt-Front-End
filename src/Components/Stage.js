@@ -6,10 +6,10 @@ import { Button, Card, Image } from 'semantic-ui-react'
 const Stage = (props) => {
 
   const storyMapper = () => {
-    if (props.stories !== null) {
+    if (props.stories !== null && props.stories.length >= 1) {
       const filteredStories = props.stories.filter(story => story.stage_id === props.stage.id)
       return filteredStories.map(story => {
-        const classColor=`ui ${story.sprint.color} card`
+        const classColor=`ui ${story.color} card`
         return (
           <Card.Group id="stories" key={story.id}>
             <Card className ={classColor}>
@@ -20,6 +20,9 @@ const Stage = (props) => {
           </Card.Group>
         )
       })
+    }
+    else {
+      return null
     }
   }
 
