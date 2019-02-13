@@ -26,7 +26,8 @@ class App extends React.Component {
     showStory: false,
     showSprint: false,
     title: "",
-    description: ""
+    description: "",
+    dragObject: null
   }
 
 
@@ -146,12 +147,6 @@ class App extends React.Component {
     }, () => console.log(this.state.title, this.state.description, this.state.stage))
   }
 
-  // handleStoryDropDown = (event) => {
-  //   this.setState({
-  //     [event.target]
-  //   })
-  // }
-
   deleteSprint = (sprintId) => {
     fetch(`${SPRINTURL}/${sprintId}`, { method: "DELETE" })
     .then(resp => {
@@ -175,6 +170,43 @@ class App extends React.Component {
           })
         }, () => console.log(this.state.sprints[0].stories))
       }
+    })
+  }
+
+  onDragStart = (event, story) => {
+    this.setState({
+      dragObject: story
+    })
+  }
+
+  onDragOver = (event, stage) => {
+    event.preventDefault()
+  }
+
+  onDrop = (event, stage, sprint) => {
+    const origSprintId = this.state.dragObject.sprint_id
+    fetch(`${STORYURL}/${this.state.dragObject.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({
+        stage_id: stage.id
+      })
+    })
+    .then(resp => resp.json())
+    .then(updatedStory => {
+      const sprintToUpdate = this.state.sprints.find(sprint => sprint.id === origSprintId)
+      console.log(this.state.dragObject)
+      const storyIndex = sprintToUpdate.stories.findIndex(story => story.id === this.state.dragObject.id)
+      sprintToUpdate.stories.splice(storyIndex, 1, updatedStory)
+      console.log(sprintToUpdate)
+      this.setState({
+        sprints: this.state.sprints.map(sprint => {
+          return sprint.id === updatedStory.sprint_id ? sprintToUpdate : sprint
+        })
+      })
     })
   }
 
@@ -204,7 +236,10 @@ class App extends React.Component {
           <Grid.Column width={13}>
             <StageContainer
             sprints={this.state.sprints}
-            deleteStory={this.deleteStory}/>
+            deleteStory={this.deleteStory}
+            dragStart={this.onDragStart}
+            onDragOver={this.onDragOver}
+            onDrop={this.onDrop}/>
           </Grid.Column>
         </Grid>
       </div>

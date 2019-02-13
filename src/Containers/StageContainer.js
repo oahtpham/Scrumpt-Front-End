@@ -18,6 +18,10 @@ export default class StageContainer extends Component {
     }))
   }
 
+  filteredSprints = () => {
+    return this.props.sprints.length > 1 ? this.props.sprints.filter(sprint => sprint.display === true) : this.props.sprints.stories
+  }
+
   storyMapper = () => {
     if (this.props.sprints.length > 1) {
       const filteredSprints = this.props.sprints.filter(sprint => sprint.display === true)
@@ -33,20 +37,63 @@ export default class StageContainer extends Component {
     }
   }
 
-  filteredSprints = () => {
-    return this.props.sprints.length > 1 ? this.props.sprints.filter(sprint => sprint.display === true) : this.props.sprints.stories
-  }
-
   stageMapper = () => {
     return this.state.stages.map(stage => {
       return (
           <Grid.Column key={stage.id} width={3}>
-            <Stage key={stage.id} stage={stage} stories={!this.filteredSprints() ? null : this.storyMapper()}
-            deleteStory={this.props.deleteStory}/>
+            <Stage
+              key={stage.id}
+              stage={stage}
+              stories={!this.filteredSprints() ? null : this.storyMapper()}
+              dragStart={this.props.dragStart}
+              onDragOver={this.props.onDragOver}
+              onDrop={this.props.onDrop}
+              deleteStory={this.props.deleteStory}/>
           </Grid.Column>
       )
     })
   }
+
+  // onDragStart = (event, story) => {
+  //   this.setState({
+  //     dragObject: story
+  //   })
+  // }
+  //
+  // onDragOver = (event, stage) => {
+  //   event.preventDefault()
+  // }
+  //
+  // onDrop = (event, stage) => {
+  //   const origStageId = this.state.dragObject.stage_id
+  //   console.log(this.state.stages)
+  //   fetch(`${STORYURL}/${this.state.dragObject.id}`, {
+  //     method: "PATCH",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       "Accept": "application/json"
+  //     },
+  //     body: JSON.stringify({
+  //       stage_id: stage.id
+  //     })
+  //   })
+  //   .then(resp => resp.json())
+  //   .then(updatedStory => {
+  //     console.log(updatedStory)
+  //     this.setState({
+  //       stages: this.state.stages.map(s => {
+  //         return s.id === stage.id ? {...s, stories: [...s.stories, updatedStory]} : s
+  //       })
+  //     }, () => console.log(this.state.stages))
+  //   })
+  //   .then(resp => {
+  //     this.setState({
+  //       stages: this.state.stages.map(s => {
+  //         return s.id === origStageId ? {...s, stories: s.stories.filter(story => story.id !== this.state.dragObject.id)} : s
+  //       })
+  //     })
+  //   })
+  // }
 
   render() {
     return (

@@ -15,7 +15,8 @@ export default class Story extends React.Component {
 
   render() {
     return (
-    <div onClick={() => this.handleStoryClick(this.props.story.id)}>
+    <div
+      onClick={() => this.handleStoryClick(this.props.story.id)}>
       <b>{this.props.story.title}</b>
       <Modal open={this.state.showDetails}>
         <Modal.Header>{this.props.story.title}</Modal.Header>
