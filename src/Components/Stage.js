@@ -12,9 +12,15 @@ const Stage = (props) => {
         const classColor=`ui ${story.color} card`
         return (
           <Card.Group id="stories" key={story.id}>
-            <Card className ={classColor}>
+            <Card
+              className ={classColor + "draggable"}
+              draggable
+              onDragStart={(event) => props.dragStart(event, story)}>
               <Card.Content>
-                <Story  story={story} deleteStory={props.deleteStory}/>
+                <Story
+                  story={story}
+                  deleteStory={props.deleteStory}
+                  />
               </Card.Content>
             </Card>
           </Card.Group>
@@ -29,7 +35,13 @@ const Stage = (props) => {
   return (
         <div>
           <h3>{props.stage.stage_name}</h3>
-            {storyMapper()}
+            <div
+              className="droppable"
+              style={{minHeight: '100vh'}}
+              onDragOver={(e) => props.onDragOver(e, props.stage)}
+              onDrop={(e) => props.onDrop(e, props.stage)}>
+              {storyMapper()}
+            </div>
         </div>
   )
 }
