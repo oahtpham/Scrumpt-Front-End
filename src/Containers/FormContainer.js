@@ -9,12 +9,14 @@ const FormContainer = (props) => {
        {props.renderSprint ?
          <NewSprint
          onChangeSprintInput={props.onChangeSprintInput}
-         onClick={props.submit}/>
+         onClick={props.submit}
+         render={props.renderSprint}/>
          :
          <NewStory
          sprints={props.sprints}
          onChangeStoryInput={props.onChangeStoryInput}
          submit={props.submit}
+         render={props.renderSprint}
          />
        }
      </div>
@@ -22,22 +24,3 @@ const FormContainer = (props) => {
 }
 
 export default FormContainer
-
-
-// <form onChange={this.props.onChangeSprintInput}>
-// <label name="name"/>
-// Name:
-// <input name="sprint_name"/>
-// <label name="deadline"/>
-// <br/> Deadline:
-// <input name="deadline" type="date" />
-// <label name="color"/>
-// <br/>Color:
-// <input name="color"/>
-// <br/>
-// <button type="submit" onClick={this.props.submit}> Submit </button>
-// <br/>
-// <br/>
-// { this.state.showing ? <NewStory storyInputs={this.handleStoryInputs}/> : null }
-// <button type="submit" onClick={this.handleNewStoryClick}> Add new Story </button>
-// </form>

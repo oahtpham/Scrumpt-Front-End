@@ -7,6 +7,7 @@ import StageContainer from './Containers/StageContainer'
 import FormContainer from './Containers/FormContainer'
 import Nav from './Components/Nav'
 import Login from './Login'
+import {Redirect} from "react-router-dom"
 
 
 const COMMENTURL = ("http://localhost:3000/comments")
@@ -52,7 +53,7 @@ class App extends React.Component {
     })
   }
 
-  onChangeSprintInput = (event) => {
+  handleChange = (event) => {
     event.preventDefault()
     this.setState({
       [event.target.name]: event.target.value
@@ -116,7 +117,7 @@ class App extends React.Component {
         })
       })
       .then(sprintCopy => {
-        this.setState({ sprints: sprintCopy})
+        this.setState({ sprints: sprintCopy, showSprint: false})
       })
     }
 
@@ -146,12 +147,6 @@ class App extends React.Component {
     }, () => console.log(this.state.title, this.state.description, this.state.stage))
   }
 
-  // handleStoryDropDown = (event) => {
-  //   this.setState({
-  //     [event.target]
-  //   })
-  // }
-
   deleteSprint = (sprintId) => {
     fetch(`${SPRINTURL}/${sprintId}`, { method: "DELETE" })
     .then(resp => {
@@ -178,23 +173,101 @@ class App extends React.Component {
     })
   }
 
+  editSprint = (event, sprint) => {
+    event.preventDefault()
+    fetch(`${SPRINTURL}/${sprint.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({
+        sprint_name: this.state.sprint_name,
+        deadline: this.state.deadline,
+        description: this.state.description,
+        color: this.state.color
+      })
+    })
+    .then(r => r.json())
+    .then(mySprint => {
+      return this.state.sprints.map(sp => {
+        if (sp.id === mySprint.id) {
+          return {...mySprint}
+        }
+        else {
+          return sp
+        }
+      })
+    })
+    .then(sprintCopy => {
+      this.setState({
+        sprints: sprintCopy
+      })
+    })
+  }
+
+  editStory = (event, story) => {
+    event.preventDefault()
+    const sprintInput = event.target.querySelector("#sprint-input").value
+    const sprintId = this.state.sprints.find(sprint => sprint.sprint_name === sprintInput).id
+    fetch(`${STORYURL}/${story.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({
+        story: {
+          title: this.state.title,
+          description: this.state.description,
+          sprint_id: sprintId,
+          user_id: 1
+      }
+    })
+    })
+    .then(r => r.json())
+    .then(myStory => {
+      let foundSprint = this.state.sprints.find(sprint => sprint.id === story.sprint_id)
+      let updatedSprintStories = foundSprint.stories.map(story => {
+        if (story.id === myStory.id) {
+          return {...myStory}
+        }
+        else {
+          return story
+        }
+      })
+      this.setState({
+        sprints: this.state.sprints.map(sprint => {
+          return sprint.id === foundSprint.id ? {...sprint, stories: updatedSprintStories} : sprint
+        })
+      })
+    })
+  }
+
   render() {
     return (
       <div id="App">
         <Nav
         sprints={this.state.sprints}
         showStory={this.handleNewStoryClick}
-        onChangeStoryInput={this.onChangeStoryInput}
+        onChangeStoryInput={this.handleChange}
         submit={this.createNewStory}
         />
         <Grid id="dashboard" divided>
           <Grid.Column width={3}>
             <h1> Sprints </h1>
-            <SprintContainer clicked={this.handleSprintClick} sprints={this.state.sprints} clickDetails={this.handleSprintDoubleClick} deleteSprint={this.deleteSprint}/>
+            <SprintContainer
+            clicked={this.handleSprintClick}
+            sprints={this.state.sprints}
+            clickDetails={this.handleSprintDoubleClick}
+            deleteSprint={this.deleteSprint}
+            editSprint={this.editSprint}
+            onChangeSprintInput={this.handleChange}
+            />
             <Modal trigger={<h3 id="new-sprint" onClick={this.handleNewSprintClick}> + Add New Sprint </h3>}>
               <Modal.Content>
                 <FormContainer
-                onChangeSprintInput={this.onChangeSprintInput}
+                onChangeSprintInput={this.handleChange}
                 submit={this.createNewSprint}
                 renderSprint={this.state.showSprint}
                 />
@@ -204,7 +277,10 @@ class App extends React.Component {
           <Grid.Column width={13}>
             <StageContainer
             sprints={this.state.sprints}
-            deleteStory={this.deleteStory}/>
+            deleteStory={this.deleteStory}
+            onChangeStoryInput={this.handleChange}
+            editStory = {this.editStory}
+            />
           </Grid.Column>
         </Grid>
       </div>

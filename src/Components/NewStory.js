@@ -5,7 +5,7 @@ const NewStory = (props) => {
   return (
     <div>
     <h2>Create a new Story</h2>
-    <form onChange={props.onChangeStoryInput} onSubmit={props.submit}>
+    <form id="new-story-form" onChange={props.onChangeStoryInput} onSubmit={props.submit}>
       <label name="name"/>
       Title:
       <input name="title"/>

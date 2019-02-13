@@ -5,7 +5,7 @@ export default class NewSprint extends Component {
     return (
       <div>
       <h2>Create a new Sprint</h2>
-        <form onChange={this.props.onChangeSprintInput}>
+        <form id="new-sprint-form" onChange={this.props.onChangeSprintInput}>
           <label name="name"/>
           Name:
           <input name="sprint_name"/>
