@@ -1,11 +1,21 @@
 import React, {Component} from 'react'
 
 const NewStory = (props) => {
+console.log("inside nav", props)
+const sprintMapper = () => {
+  console.log("sprintmapper")
+  if (!props.sprints) { return [null] }
 
+  return props.sprints.map(sprint => {
+    return (
+      <option key={sprint.id} name={sprint.sprint_name}>{sprint.sprint_name}</option>
+    )
+  })
+}
   return (
     <div>
     <h2>Create a new Story</h2>
-    <form onChange={props.onChangeStoryInput} onSubmit={props.submit}>
+    <form id="new-sprint-form" onChange={props.onChangeStoryInput} onSubmit={props.submit}>
       <label name="name"/>
       Title:
       <input name="title"/>
@@ -20,11 +30,7 @@ const NewStory = (props) => {
       </select>
       Sprint:
       <select name="sprint" id="sprint-input">
-      {props.sprints.map(sprint => {
-        return (
-          <option key={sprint.id} name={sprint.sprint_name}>{sprint.sprint_name}</option>
-        )
-      })}
+      {sprintMapper()}
       <option>null</option>
       </select>
       <button type="submit"> Submit </button>

@@ -18,10 +18,6 @@ export default class StageContainer extends Component {
     }))
   }
 
-  filteredSprints = () => {
-    return this.props.sprints.length > 1 ? this.props.sprints.filter(sprint => sprint.display === true) : this.props.sprints.stories
-  }
-
   storyMapper = () => {
     if (this.props.sprints.length > 1) {
       const filteredSprints = this.props.sprints.filter(sprint => sprint.display === true)
@@ -37,18 +33,36 @@ export default class StageContainer extends Component {
     }
   }
 
+
+  filteredSprints = () => {
+    if (!this.props.sprints) {
+      return null
+    }
+    else if (this.props.sprints.length > 1 ) {
+      return this.props.sprints.filter(sprint => sprint.display === true)
+    }
+    else {
+      return this.props.sprints.stories
+    }
+  }
+
   stageMapper = () => {
     return this.state.stages.map(stage => {
       return (
           <Grid.Column key={stage.id} width={3}>
             <Stage
-              key={stage.id}
-              stage={stage}
-              stories={!this.filteredSprints() ? null : this.storyMapper()}
-              dragStart={this.props.dragStart}
-              onDragOver={this.props.onDragOver}
-              onDrop={this.props.onDrop}
-              deleteStory={this.props.deleteStory}/>
+            key={stage.id}
+            stage={stage}
+            stories={!this.filteredSprints() ? null : this.storyMapper()}
+            deleteStory={this.props.deleteStory}
+            onChange={this.props.onChangeStoryInput}
+            sprints={this.props.sprints}
+            editStory={this.props.editStory}
+            dragStart={this.props.dragStart}
+            onDragOver={this.props.onDragOver}
+            onDrop={this.props.onDrop}
+            deleteStory={this.props.deleteStory}/>
+            />
           </Grid.Column>
       )
     })

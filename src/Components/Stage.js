@@ -18,9 +18,12 @@ const Stage = (props) => {
               onDragStart={(event) => props.dragStart(event, story)}>
               <Card.Content>
                 <Story
-                  story={story}
-                  deleteStory={props.deleteStory}
-                  />
+                story={story}
+                deleteStory={props.deleteStory}
+                onChange={props.onChange}
+                sprints={props.sprints}
+                editStory={props.editStory}
+                />
               </Card.Content>
             </Card>
           </Card.Group>
