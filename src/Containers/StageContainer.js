@@ -33,6 +33,7 @@ export default class StageContainer extends Component {
     }
   }
 
+
   filteredSprints = () => {
     if (!this.props.sprints) {
       return null
@@ -57,11 +58,56 @@ export default class StageContainer extends Component {
             onChange={this.props.onChangeStoryInput}
             sprints={this.props.sprints}
             editStory={this.props.editStory}
+            dragStart={this.props.dragStart}
+            onDragOver={this.props.onDragOver}
+            onDrop={this.props.onDrop}
+            deleteStory={this.props.deleteStory}/>
             />
           </Grid.Column>
       )
     })
   }
+
+  // onDragStart = (event, story) => {
+  //   this.setState({
+  //     dragObject: story
+  //   })
+  // }
+  //
+  // onDragOver = (event, stage) => {
+  //   event.preventDefault()
+  // }
+  //
+  // onDrop = (event, stage) => {
+  //   const origStageId = this.state.dragObject.stage_id
+  //   console.log(this.state.stages)
+  //   fetch(`${STORYURL}/${this.state.dragObject.id}`, {
+  //     method: "PATCH",
+  //     headers: {
+  //       "Content-Type": "application/json",
+  //       "Accept": "application/json"
+  //     },
+  //     body: JSON.stringify({
+  //       stage_id: stage.id
+  //     })
+  //   })
+  //   .then(resp => resp.json())
+  //   .then(updatedStory => {
+  //     console.log(updatedStory)
+  //     this.setState({
+  //       stages: this.state.stages.map(s => {
+  //         return s.id === stage.id ? {...s, stories: [...s.stories, updatedStory]} : s
+  //       })
+  //     }, () => console.log(this.state.stages))
+  //   })
+  //   .then(resp => {
+  //     this.setState({
+  //       stages: this.state.stages.map(s => {
+  //         return s.id === origStageId ? {...s, stories: s.stories.filter(story => story.id !== this.state.dragObject.id)} : s
+  //       })
+  //     })
+  //   })
+  // }
 
   render() {
     return (

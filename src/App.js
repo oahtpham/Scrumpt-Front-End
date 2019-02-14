@@ -28,6 +28,7 @@ class App extends React.Component {
     showSprint: false,
     title: "",
     description: "",
+    dragObject: null
   }
 
 
@@ -181,6 +182,7 @@ class App extends React.Component {
     })
   }
 
+
   editSprint = (event, sprint) => {
     event.preventDefault()
     fetch(`${SPRINTURL}/${sprint.id}`, {
@@ -213,6 +215,7 @@ class App extends React.Component {
       })
     })
   }
+  
 
   editStory = (event, story) => {
     event.preventDefault()
@@ -252,11 +255,40 @@ class App extends React.Component {
     })
   }
 
-  openNewForm = () => {
-    this.setState(prevState => {
-        return {newForm: !prevState.newForm}
-      }
-    )
+  
+  onDragStart = (event, story) => {
+    this.setState({
+      dragObject: story
+    })
+  }
+
+  onDragOver = (event, stage) => {
+    event.preventDefault()
+  }
+
+  onDrop = (event, stage, sprint) => {
+    const origSprintId = this.state.dragObject.sprint_id
+    fetch(`${STORYURL}/${this.state.dragObject.id}`, {
+      method: "PATCH",
+      headers: {
+        "Content-Type": "application/json",
+        "Accept": "application/json"
+      },
+      body: JSON.stringify({
+        stage_id: stage.id
+      })
+    })
+    .then(resp => resp.json())
+    .then(updatedStory => {
+      const sprintToUpdate = this.state.sprints.find(sprint => sprint.id === origSprintId)
+      const storyIndex = sprintToUpdate.stories.findIndex(story => story.id === this.state.dragObject.id)
+      sprintToUpdate.stories.splice(storyIndex, 1, updatedStory)
+      this.setState({
+        sprints: this.state.sprints.map(sprint => {
+          return sprint.id === updatedStory.sprint_id ? sprintToUpdate : sprint
+        })
+      })
+    })
   }
 
   render() {
@@ -299,7 +331,9 @@ class App extends React.Component {
             deleteStory={this.deleteStory}
             onChangeStoryInput={this.handleChange}
             editStory = {this.editStory}
-            />
+            dragStart={this.onDragStart}
+            onDragOver={this.onDragOver}
+            onDrop={this.onDrop}/>
           </Grid.Column>
         </Grid>
       </div>
