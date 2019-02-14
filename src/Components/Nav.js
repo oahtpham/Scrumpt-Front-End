@@ -9,7 +9,7 @@ import FormContainer from '../Containers/FormContainer'
 
 
 const Nav = (props) => {
-
+  console.log("inside nav", props)
   return (
     <div className="ui teal inverted segment">
       <div>
@@ -18,12 +18,15 @@ const Nav = (props) => {
         <Link to="/" className="item">Home</Link>
         <Link to="/dashboard" className="item" >Sprint Dashboard</Link>
         <Link to="/Backlog" className="item">Backlog</Link>
-        <Modal trigger={<a className="item" onClick={props.showStory}>Add New Story</a>}>
+        <a className="item" onClick={props.showStory}>Add New Story</a>
+        <Modal open={props.renderStory}>
           <Modal.Content>
           <FormContainer
           sprints={props.sprints}
           onChangeStoryInput={props.onChangeStoryInput}
-          submit={props.submit}/>
+          submit={props.submit}
+          renderStory={props.renderStory}
+          renderSprint={props.renderSprint}/>
           </Modal.Content>
         </Modal >
         </div>

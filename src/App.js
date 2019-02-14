@@ -27,7 +27,7 @@ class App extends React.Component {
     showStory: false,
     showSprint: false,
     title: "",
-    description: ""
+    description: "",
   }
 
 
@@ -78,7 +78,7 @@ class App extends React.Component {
     .then(r => r.json())
     .then(mySprint => {
       this.setState(prevState => {
-        return {sprints: [...prevState.sprints, mySprint]}
+        return {sprints: [...prevState.sprints, mySprint], showSprint: false, showStory: false}
       })
     })
   }
@@ -117,17 +117,25 @@ class App extends React.Component {
         })
       })
       .then(sprintCopy => {
-        this.setState({ sprints: sprintCopy, showSprint: false})
+        this.setState(prevState => {
+          return {sprints: sprintCopy}
+        })
+      })
+      .then(() => {
+        this.setState({
+          showStory: false,
+          showSprint: false
+        })
       })
     }
 
   handleNewStoryClick = (event) => {
     event.preventDefault()
     this.setState(prevState => {
-      return {
+      return Object.assign(prevState, {
         showSprint: false,
-        showStory: true,
-      }
+        showStory: true
+      })
     })
   }
 
@@ -136,7 +144,7 @@ class App extends React.Component {
     this.setState(prevState => {
       return {
         showSprint: true,
-        showStory: false,
+        showStory: false
       }
     })
   }
@@ -244,6 +252,13 @@ class App extends React.Component {
     })
   }
 
+  openNewForm = () => {
+    this.setState(prevState => {
+        return {newForm: !prevState.newForm}
+      }
+    )
+  }
+
   render() {
     return (
       <div id="App">
@@ -252,6 +267,8 @@ class App extends React.Component {
         showStory={this.handleNewStoryClick}
         onChangeStoryInput={this.handleChange}
         submit={this.createNewStory}
+        renderSprint={this.state.showSprint}
+        renderStory={this.state.showStory}
         />
         <Grid id="dashboard" divided>
           <Grid.Column width={3}>
@@ -264,12 +281,14 @@ class App extends React.Component {
             editSprint={this.editSprint}
             onChangeSprintInput={this.handleChange}
             />
-            <Modal trigger={<h3 id="new-sprint" onClick={this.handleNewSprintClick}> + Add New Sprint </h3>}>
+            <h3 onClick={this.handleNewSprintClick}>+ Add New Sprint</h3>
+            <Modal open={this.state.showSprint}>
               <Modal.Content>
                 <FormContainer
                 onChangeSprintInput={this.handleChange}
                 submit={this.createNewSprint}
                 renderSprint={this.state.showSprint}
+                renderStory={this.state.showStory}
                 />
               </Modal.Content>
             </Modal >
