@@ -93,13 +93,13 @@ export default class Sprint extends React.Component {
         <h2>Edit Sprint</h2>
           <Form.Field>
             <label>Title</label>
-              <input name='sprint_name' placeholder={this.props.sprint.sprint_name} />
+              <input name='sprint_name' defaultValue={this.props.sprint.sprint_name} />
             <label>Description</label>
-              <input name='description'placeholder={this.props.sprint.description}/>
+              <input name='description'defaultValue={this.props.sprint.description}/>
             <label>Deadline</label>
-              <input name="deadline" type="date" placeholder={this.props.sprint.deadline}/>
+              <input name="deadline" type="date" defaultValue={this.props.sprint.deadline}/>
             <label>Color</label>
-              <input name="color" placeholder={this.props.sprint.color}/>
+              <input name="color" defaultValue={this.props.sprint.color}/>
           </Form.Field>
           <Button onClick={(event) => this.editSprintandToggle(event, this.props.sprint)}type='submit'>Submit</Button>
      </Form>

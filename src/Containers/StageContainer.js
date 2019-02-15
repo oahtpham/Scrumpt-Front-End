@@ -62,7 +62,6 @@ export default class StageContainer extends Component {
             onDragOver={this.props.onDragOver}
             onDrop={this.props.onDrop}
             deleteStory={this.props.deleteStory}/>
-            />
           </Grid.Column>
       )
     })

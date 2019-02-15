@@ -59,9 +59,9 @@ export default class Story extends React.Component {
         <h2>Edit Story</h2>
           <Form.Field>
             <label>Title</label>
-              <input name='title' placeholder={this.props.story.title} />
+              <input name='title' defaultValue={this.props.story.title} />
             <label>Description</label>
-              <input name='description'placeholder={this.props.story.description}/>
+              <input name='description'defaultValue={this.props.story.description}/>
             <label>Sprint</label>
             <select name="sprint" id="sprint-input">
             {this.props.sprints.map(sprint => {
