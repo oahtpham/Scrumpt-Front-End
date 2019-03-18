@@ -59,11 +59,11 @@ export default class Story extends React.Component {
         <h2>Edit Story</h2>
           <Form.Field>
             <label>Title</label>
-              <input name='title' defaultValue={this.props.story.title} />
+              <input id="story-title" name='title' defaultValue={this.props.story.title} />
             <label>Description</label>
-              <input name='description'defaultValue={this.props.story.description}/>
+              <input  id= "story-description" name='description' defaultValue={this.props.story.description}/>
             <label>Sprint</label>
-            <select name="sprint" id="sprint-input">
+            <select name="sprint" id="sprint-input" defaultValue={this.props.sprints.find(sprint => sprint.id === this.props.story.sprint_id).sprint_name}>
             {this.props.sprints.map(sprint => {
               return (
                 <option key={sprint.id} name={sprint.sprint_name}>{sprint.sprint_name}</option>

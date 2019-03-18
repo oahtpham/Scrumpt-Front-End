@@ -185,6 +185,9 @@ class App extends React.Component {
 
   editSprint = (event, sprint) => {
     event.preventDefault()
+    const sprintName = document.querySelector("#sprint-name").value
+    const sprintDescription = document.querySelector("#sprint-description").value
+    const sprintColor = document.querySelector("#sprint-color").value
     fetch(`${SPRINTURL}/${sprint.id}`, {
       method: "PATCH",
       headers: {
@@ -192,10 +195,10 @@ class App extends React.Component {
         "Accept": "application/json"
       },
       body: JSON.stringify({
-        sprint_name: this.state.sprint_name,
+        sprint_name: sprintName,
         deadline: this.state.deadline,
-        description: this.state.description,
-        color: this.state.color
+        description: sprintDescription,
+        color: sprintColor
       })
     })
     .then(r => r.json())
@@ -215,12 +218,13 @@ class App extends React.Component {
       })
     })
   }
-  
 
   editStory = (event, story) => {
     event.preventDefault()
     const sprintInput = event.target.querySelector("#sprint-input").value
     const sprintId = this.state.sprints.find(sprint => sprint.sprint_name === sprintInput).id
+    const storyTitle = event.target.querySelector("#story-title").value
+    const storyDescription = event.target.querySelector("#story-description").value
     fetch(`${STORYURL}/${story.id}`, {
       method: "PATCH",
       headers: {
@@ -229,8 +233,8 @@ class App extends React.Component {
       },
       body: JSON.stringify({
         story: {
-          title: this.state.title,
-          description: this.state.description,
+          title: storyTitle,
+          description: storyDescription,
           sprint_id: sprintId,
           user_id: 1
       }
@@ -238,24 +242,24 @@ class App extends React.Component {
     })
     .then(r => r.json())
     .then(myStory => {
-      let foundSprint = this.state.sprints.find(sprint => sprint.id === story.sprint_id)
-      let updatedSprintStories = foundSprint.stories.map(story => {
-        if (story.id === myStory.id) {
-          return {...myStory}
+      let editedSprints = this.state.sprints.map(sprint => {
+        // if sprint.id === the story's old sprint_id, return a filtered array of stories with the edited story filtered out
+        if (sprint.id === story.sprint_id) {
+          sprint.stories = sprint.stories.filter(st => st.id != story.id)
         }
-        else {
-          return story
+        if (sprint.id === myStory.sprint_id) {
+          // if sprint.id === the story's new sprint_id, add sprint.stories via destructuring
+          sprint.stories = [...sprint.stories, myStory]
         }
+        return sprint
       })
       this.setState({
-        sprints: this.state.sprints.map(sprint => {
-          return sprint.id === foundSprint.id ? {...sprint, stories: updatedSprintStories} : sprint
-        })
+        sprints: editedSprints
       })
     })
   }
 
-  
+
   onDragStart = (event, story) => {
     this.setState({
       dragObject: story
@@ -333,7 +337,8 @@ class App extends React.Component {
             editStory = {this.editStory}
             dragStart={this.onDragStart}
             onDragOver={this.onDragOver}
-            onDrop={this.onDrop}/>
+            onDrop={this.onDrop}
+            />
           </Grid.Column>
         </Grid>
       </div>
