@@ -2,8 +2,8 @@ import React, {Component} from 'react'
 import Stage from '../Components/Stage'
 import { Grid } from 'semantic-ui-react'
 
-const STAGEURL = ("http://localhost:3000/stages")
-const STORYURL = ("http://localhost:3000/stories")
+const STAGEURL = (`${process.env.REACT_APP_APIURL}/stages`)
+const STORYURL = (`${process.env.REACT_APP_APIURL}/stories`)
 
 export default class StageContainer extends Component {
   state = {

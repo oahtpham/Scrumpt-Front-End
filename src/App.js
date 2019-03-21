@@ -10,9 +10,9 @@ import Login from './Login'
 import {Redirect} from "react-router-dom"
 
 
-const COMMENTURL = ("http://localhost:3000/comments")
-const SPRINTURL = ("http://localhost:3000/sprints")
-const STORYURL = ("http://localhost:3000/stories")
+const COMMENTURL = (`${process.env.REACT_APP_APIURL}/comments`)
+const SPRINTURL = (`${process.env.REACT_APP_APIURL}/sprints`)
+const STORYURL = (`${process.env.REACT_APP_APIURL}/stories`)
 
 class App extends React.Component {
 
