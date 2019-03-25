@@ -4,6 +4,7 @@ import { Modal, Card, Button, Icon, Form, TextArea } from 'semantic-ui-react'
 export default class NewSprint extends Component {
   render(){
     return (
+      <div>
       <Form onChange={this.props.onChangeSprintInput}>
         <h2>Create a new Sprint</h2>
           <Form.Field>
@@ -19,6 +20,7 @@ export default class NewSprint extends Component {
           </Form.Field>
           <Button onClick={this.props.onClick} type='submit'>Submit</Button>
       </Form>
+      </div>
     )
   }
 }

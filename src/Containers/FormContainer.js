@@ -19,6 +19,7 @@ const FormContainer = (props) => {
       return (
         <NewSprint
         onChangeSprintInput={props.onChangeSprintInput}
+        showSprint={props.showSprint}
         onClick={props.submit}/>
       )
     }

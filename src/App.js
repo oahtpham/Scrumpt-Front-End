@@ -1,13 +1,13 @@
 import React from 'react';
-import { Grid, Modal } from 'semantic-ui-react'
-import { BrowserRouter as Router, Route, Link, Switch } from "react-router-dom"
+import { Grid, Modal, Button } from 'semantic-ui-react'
+import { BrowserRouter as Router, Route, Link, Switch, withRouter } from "react-router-dom"
 import './App.css';
 import SprintContainer from './Containers/SprintContainer'
 import StageContainer from './Containers/StageContainer'
 import FormContainer from './Containers/FormContainer'
 import Nav from './Components/Nav'
-import Login from './Login'
 import {Redirect} from "react-router-dom"
+import Homepage from './Homepage';
 
 
 const COMMENTURL = (`${process.env.REACT_APP_APIURL}/comments`)
@@ -134,8 +134,7 @@ class App extends React.Component {
     event.preventDefault()
     this.setState(prevState => {
       return Object.assign(prevState, {
-        showSprint: false,
-        showStory: true
+        showStory: !this.state.showStory
       })
     })
   }
@@ -144,8 +143,7 @@ class App extends React.Component {
     event.preventDefault()
     this.setState(prevState => {
       return {
-        showSprint: true,
-        showStory: false
+        showSprint: !this.state.showSprint,
       }
     })
   }
@@ -319,6 +317,8 @@ class App extends React.Component {
             />
             <h3 onClick={this.handleNewSprintClick}>+ Add New Sprint</h3>
             <Modal open={this.state.showSprint}>
+            <Button
+              className= 'ui right floated button' onClick={this.handleNewSprintClick}>X</Button>
               <Modal.Content>
                 <FormContainer
                 onChangeSprintInput={this.handleChange}
@@ -346,4 +346,4 @@ class App extends React.Component {
   }
 }
 
-export default App;
+export default withRouter(App);
