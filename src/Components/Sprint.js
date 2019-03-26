@@ -79,7 +79,7 @@ export default class Sprint extends React.Component {
             <Modal.Description>
             {this.props.sprint.description}
             </Modal.Description>
-            Deadline: {this.props.sprint.deadline ? this.dateDiffInDays(todaysDate, this.dateFormat()) + "days" : "N/A"}
+            Deadline: {this.props.sprint.deadline ? this.dateDiffInDays(todaysDate, this.dateFormat()) + " days" : "N/A"}
           </Modal.Content>
           <Modal.Actions>
           <Button onClick={this.editToggle} color='green' inverted>
