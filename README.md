@@ -11,6 +11,7 @@ The tools, frameworks, and libraries used to create this include:
 - Semantic UI Design
 
 The working application can be found here: https://scrumpt.herokuapp.com
+
 Video demo of how to use the application can be found here: https://vimeo.com/326460535
 
 
