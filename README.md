@@ -2,7 +2,7 @@
 
 Inspired by the Scrum Agile Methodology, [Scrumpt](https://scrumpt.herokuapp.com/) allows users to track different sprints and their associated stories within the project workflow. Each Sprint has 5 stages, where associated stories or features can be found under. This allows users to visually see the progress of each planned feature build.
 
-This is a pair-programming project with Thao Pham and Satya Sinha as the contributers.
+This is a pair-programming project with Thao Pham and [Satya Sinha](https://github.com/satyasinha94) as the contributers.
 
 ![image](https://user-images.githubusercontent.com/43506537/55763895-0aa81700-5a37-11e9-9418-dae818ef41a9.png)
 
