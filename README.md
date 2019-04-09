@@ -22,7 +22,7 @@ Users have full CRUD functionality with the ability to create, update, and delet
 
 ![CRUD](public/scrumpt_crud.gif)
 
-### Drag and Drop
+#### Drag and Drop
 
 React synthetic events were used for the drag and drop feature of the application. Users can move individual stories from different stages by dragging the story cards to the desired stage container. 
 
@@ -30,7 +30,7 @@ React synthetic events were used for the drag and drop feature of the applicatio
 
 On drop, a PATCH request is made to the backend to update the draggable object with a new stage foreign key. This change is then rendered onto the screen without refreshing the page or disrupting the user's experience due to the successful AJAX fetch request. 
 
-#### Future Direction
+### Future Direction
 
 If provided more time, additional features would include:
 
